@@ -8,7 +8,7 @@ import { Button } from "../components/Button";
 
 export function SignIn() {
 
-    const {signIn, user} = useAuth()
+    const {signIn, isUserLoading} = useAuth()
 
     return (
         <Center flex={1} bgColor="gray.900" p={7} >
@@ -19,6 +19,12 @@ export function SignIn() {
                 type="SECONDARY"
                 mt={12}
                 onPress={signIn}
+                isLoading={isUserLoading}
+                _loading={{
+                    _spinner: { 
+                        color: 'white'
+                    }
+                }}
             />
             <Text textAlign="center" mt={4} color="gray.500">
                 Não utilizamos nenhuma informação além {'\n'}
