@@ -119,13 +119,6 @@ export async function poolRouts(fastify : FastifyInstance){
     async (request) => {
 
         const pools =  await prisma.pool.findMany({
-            where:{
-                participant:{
-                    some:{
-                        userId: request.user.sub
-                    }
-                }
-            },
             include:{
                 _count:{
                     select:{
@@ -150,8 +143,14 @@ export async function poolRouts(fastify : FastifyInstance){
                         id: true
                     }
                 },
-
-            }
+                
+            }, where:{
+                participant:{
+                    some:{
+                        userId: request.user.sub
+                    }
+                }
+            },
         })
 
         return {pools}
@@ -160,7 +159,7 @@ export async function poolRouts(fastify : FastifyInstance){
     // criando a rota para a detalhe do Bolão
     fastify.get('/pools/:id', 
     {onRequest: [authenticate]},
-    async (request) => {
+    async (request, reply) => {
 
         const getPoolParams = z.object({
             id: z.string(),

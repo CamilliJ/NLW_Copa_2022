@@ -1,59 +1,64 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { PlusCircle, SoccerBall} from 'phosphor-react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { PlusCircle, SoccerBall } from 'phosphor-react-native'
 
 import { Platform } from 'react-native'
-import{ useTheme } from 'native-base'
+import { useTheme } from 'native-base'
 
 import { New } from '../screens/New'
 import { Pools } from '../screens/Pools'
+import { Details } from '../screens/Details';
 import { Find } from '../screens/Find';
 
+const { Navigator, Screen } = createBottomTabNavigator()
 
-const {Navigator, Screen} = createBottomTabNavigator()
-
-export function AppRoutes(){
+export function AppRoutes() {
 
     const { colors, sizes } = useTheme()
     const size = sizes[6]
 
-    return(
+    return (
         <Navigator screenOptions={{
             headerShown: false,
             tabBarLabelPosition: 'beside-icon',
             tabBarActiveTintColor: colors.yellow[500],
             tabBarInactiveTintColor: colors.green[300],
-            tabBarStyle:{
+            tabBarStyle: {
                 position: 'absolute',
                 height: sizes[16],
                 borderTopWidth: 0,
                 backgroundColor: colors.gray[800]
             },
-            tabBarItemStyle:{
+            tabBarItemStyle: {
                 position: 'relative',
                 top: Platform.OS === 'android' ? - 10 : 0
             }
         }}>
-            <Screen 
+            <Screen
                 name="new"
-                component = {New}
+                component={New}
                 options={{
-                    tabBarIcon: ({ color}) => <PlusCircle color={color} size={size} />,
+                    tabBarIcon: ({ color }) => <PlusCircle color={color} size={size} />,
                     tabBarLabel: 'Novo Bolão'
                 }}
             />
-            <Screen 
+            <Screen
                 name="pools"
-                component = {Pools}
+                component={Pools}
                 options={{
-                    tabBarIcon: ({ color}) => <SoccerBall color={color}  size={size}/>,
+                    tabBarIcon: ({ color }) => <SoccerBall color={color} size={size} />,
                     tabBarLabel: 'Meus Bolões'
                 }}
             />
-            <Screen 
-            name="find"
-            component = {Find}
-            options={{tabBarButton : () => null  }}
-        />
+            <Screen
+                name="find"
+                component={Find}
+                options={{ tabBarButton: () => null }}
+            />
+            <Screen
+                name="details"
+                component={Details}
+                options={{ tabBarButton: () => null }}
+            />
         </Navigator>
     )
 }
